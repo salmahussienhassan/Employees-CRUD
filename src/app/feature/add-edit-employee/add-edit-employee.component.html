@@ -1,0 +1,48 @@
+<div class="w-100">
+    <div class="border-bottom">
+      <div class="d-flex p-3 align-items-center justify-content-between">
+        <h4>Add Employee</h4>
+        <i (click)="closeModal()" class="bi bi-x-lg cursor-pointer"></i>  
+      </div>
+    </div>
+  
+    <form class="d-flex flex-column gap-3 p-3" [formGroup]="addEmployeeForm">
+      <div>
+        <label class="mb-2">Name</label>
+        <input formControlName="empName" class="form-control" />
+        <div class="text-danger small mt-1" *ngIf="empName.invalid && (empName.dirty || empName.touched)">
+          Name is required.
+        </div>
+      </div>
+      <div>
+        <label class="mb-2">Email</label>
+        <input formControlName="empEmail" class="form-control" />
+        <div class="text-danger small mt-1" *ngIf="empEmail.invalid && (empEmail.dirty || empEmail.touched)">
+          <div *ngIf="empEmail.errors?.['required']">Email is required.</div>
+          <div *ngIf="empEmail.errors?.['email']">Invalid email format.</div>
+        </div>
+      </div>
+      <div>
+        <label class="mb-2">Address</label>
+        <textarea formControlName="empAddress" class="form-control" rows="3" ></textarea>
+        <div class="text-danger small mt-1" *ngIf="empAddress.invalid && (empAddress.dirty || empAddress.touched)">
+          Address is required.
+        </div>
+      </div>
+      <div>
+        <label class="mb-2">Phone</label>
+        <input formControlName="empPhone" class="form-control" />
+        <div class="text-danger small mt-1" *ngIf="empPhone.invalid && (empPhone.dirty || empPhone.touched)">
+          <div *ngIf="empPhone.errors?.['required']">Phone is required.</div>
+          <div *ngIf="empPhone.errors?.['pattern']">Phone must start with 010, 011, or 012 and be 11 digits.</div>
+        </div>
+      </div>
+    
+    </form>
+    <div class="d-flex justify-content-end bg-body-secondary p-3 border-top">
+      <button (click)="closeModal()" class="btn" type="button">Cancel</button>
+      <button *ngIf="!editMode" (click)="AddEmployee()" class="btn btn-success" type="submit" [disabled]="addEmployeeForm.invalid || isSaveBtnDisabled">Add</button>
+      <button *ngIf="editMode" (click)="EditEmployee()" class="btn btn-save text-white" type="submit" [disabled]="addEmployeeForm.invalid || isSaveBtnDisabled">Save</button>
+    </div>
+  </div>
+  
